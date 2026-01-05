@@ -29,7 +29,7 @@ print("\n\nMissing Values of the titanic data :")
 print(titanic.isnull().sum())
 
 print("\n\nDuplicate Values of the titanic data :")
-print(titanic.duplicated().sum())
+print(titanic.duplicated('Age'))
 
 print("\n\n Value count of the titanic data :")
 print(titanic.value_counts())
