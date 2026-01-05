@@ -33,3 +33,19 @@ print(titanic.duplicated('Age'))
 
 print("\n\n Value count of the titanic data :")
 print(titanic.value_counts())
+
+print("\n\n Operations using numpy :")
+print(np.mean(titanic['Age']))
+print(np.median(titanic['Age']))
+print(np.std(titanic['Age']))
+
+print("\n\n Operations using seaborn :")
+sns.boxplot(x='Age', data=titanic)
+sns.histplot(x='Age', data=titanic)
+plt.show()
+
+print("\n\n Operations using seaborn :")
+sns.countplot(x='Gender', data=titanic)
+sns.boxplot(x='Gender', data=titanic)
+sns.histplot(x='Gender', data=titanic)
+plt.show()
