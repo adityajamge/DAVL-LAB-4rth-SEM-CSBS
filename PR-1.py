@@ -44,7 +44,11 @@ def corelation(ar1, ar2):
     
     return covar / (stddev1 * stddev2)
 
-data = [1,2,3,4,5,6,7,8,8,9,9,10,10]
+# data = [1,2,3,4,5,6,7,8,8,9,9,10,10]
+data = []
+
+print("n")
+
 print(f"Mean: {mean(data)}") 
 print(f"Median: {median(data)}")    
 print(f"Mode: {mode(data)}") 
