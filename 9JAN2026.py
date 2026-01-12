@@ -44,13 +44,27 @@ def corelation(ar1, ar2):
     
     return covar / (stddev1 * stddev2)
 
-data = [1,2,3,4,5,6,7,8,8,9,9,10,10]
-print(f"Mean: {mean(data)}") 
-print(f"Median: {median(data)}")    
-print(f"Mode: {mode(data)}") 
 
-import math
-print(f"Variance: {variance(data)}")
-print(f"Standard Deviation: {std_dev(data)}")
-print(f"Covariance: {covariance(data, data)}")
-print(f"Correlation: {corelation(data, data)}")
+try:
+    print("Name: Aditya Babanrao Jamge")
+    print("PRN No.: RBTL25CB076")
+    limit = int(input("Enter the limit for data values: "))
+    data = []
+    if limit < 1:
+        print("Size cant be -ve")
+    else:
+        for i in range(limit):
+            data.append(int(input("Enter element: ")))
+        print(f"Mean: {mean(data)}") 
+        print(f"Median: {median(data)}")    
+        print(f"Mode: {mode(data)}") 
+
+        import math
+        print(f"Variance: {variance(data)}")
+        print(f"Standard Deviation: {std_dev(data)}")
+        print(f"Covariance: {covariance(data, data)}")
+        print(f"Correlation: {corelation(data, data)}")
+except:
+    print("Please enter in only numeric format")
+
+
