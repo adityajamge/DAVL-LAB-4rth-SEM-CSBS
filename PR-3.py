@@ -1,3 +1,10 @@
+# Name: Aditya Babanrao Jamge
+# PRN Number: RBTL25CB076
+
+print("Name: Aditya Babanrao Jamge")
+print("PRN Number: RBTL25CB076")
+print()
+
 def mean(ar):
     return sum(ar) / len(ar)
 
@@ -44,8 +51,7 @@ def corelation(ar1, ar2):
     
     return covar / (stddev1 * stddev2)
 
-# data = [1,2,3,4,5,6,7,8,8,9,9,10,10]
-data = []
+data = [1,2,3,4,5,6,7,8,8,9,9,10,10]
 
 print("n")
 

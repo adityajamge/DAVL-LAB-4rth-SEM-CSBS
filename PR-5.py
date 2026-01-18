@@ -1,3 +1,10 @@
+# Name: Aditya Babanrao Jamge
+# PRN Number: RBTL25CB076
+
+print("Name: Aditya Babanrao Jamge")
+print("PRN Number: RBTL25CB076")
+print()
+
 # =====================================================
 # SPORTS COORDINATOR - STUDENT EVENT MANAGEMENT SYSTEM
 # =====================================================

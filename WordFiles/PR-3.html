@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Practical 3 - Statistical Measures</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            margin: 1in;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 20px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ddd;
+            font-family: 'Courier New', monospace;
+            font-size: 10pt;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .header-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .screenshot-placeholder {
+            border: 2px dashed #999;
+            padding: 50px;
+            text-align: center;
+            color: #666;
+            margin: 20px 0;
+        }
+
+        p,
+        li {
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header-info">
+        <p><strong>Name:</strong> Aditya Babanrao Jamge</p>
+        <p><strong>PRN Number:</strong> RBTL25CB076</p>
+    </div>
+
+    <h1>PRACTICAL NO. 3</h1>
+
+    <h2>Title</h2>
+    <p>Implementation of Statistical Measures using Python</p>
+
+    <h2>Aim</h2>
+    <p>To implement and calculate various statistical measures including Mean, Median, Mode, Variance, Standard
+        Deviation, Covariance, and Correlation using Python programming.</p>
+
+    <h2>Requirements</h2>
+    <table>
+        <tr>
+            <th>Software/Hardware</th>
+            <th>Specification</th>
+        </tr>
+        <tr>
+            <td>Operating System</td>
+            <td>Windows 10/11</td>
+        </tr>
+        <tr>
+            <td>Programming Language</td>
+            <td>Python 3.x</td>
+        </tr>
+        <tr>
+            <td>IDE</td>
+            <td>VS Code / PyCharm / IDLE</td>
+        </tr>
+        <tr>
+            <td>Libraries</td>
+            <td>math (built-in)</td>
+        </tr>
+    </table>
+
+    <h2>Theory</h2>
+
+    <h3>1. Mean (Average)</h3>
+    <p>The mean is the sum of all values divided by the number of values. It represents the central tendency of the
+        data.</p>
+    <p><strong>Formula:</strong> Mean = Sum of all values / n</p>
+
+    <h3>2. Median</h3>
+    <p>The median is the middle value in a sorted dataset. If the dataset has an even number of values, the median is
+        the average of the two middle values.</p>
+
+    <h3>3. Mode</h3>
+    <p>The mode is the value that appears most frequently in the dataset. A dataset can have one mode, multiple modes,
+        or no mode.</p>
+
+    <h3>4. Variance</h3>
+    <p>Variance measures how spread out the data is from the mean. It is the average of the squared differences from the
+        mean.</p>
+    <p><strong>Formula:</strong> Variance = Sum of (x - mean)^2 / n</p>
+
+    <h3>5. Standard Deviation</h3>
+    <p>Standard deviation is the square root of variance. It measures the dispersion of data points around the mean.</p>
+    <p><strong>Formula:</strong> Std Dev = Square root of Variance</p>
+
+    <h3>6. Covariance</h3>
+    <p>Covariance indicates the direction of the linear relationship between two variables. Positive covariance means
+        both variables tend to increase together.</p>
+    <p><strong>Formula:</strong> Cov(X,Y) = Sum of (xi - mean_x)(yi - mean_y) / n</p>
+
+    <h3>7. Correlation</h3>
+    <p>Correlation is a standardized measure of the relationship between two variables, ranging from -1 to +1.</p>
+    <p><strong>Formula:</strong> Correlation = Covariance(X,Y) / (Std_Dev_X x Std_Dev_Y)</p>
+
+    <h2>Code</h2>
+    <pre>
+# Name: Aditya Babanrao Jamge
+# PRN Number: RBTL25CB076
+
+print("Name: Aditya Babanrao Jamge")
+print("PRN Number: RBTL25CB076")
+print()
+
+def mean(ar):
+    return sum(ar) / len(ar)
+
+def median(ar):
+    sorted_ar = sorted(ar)
+    n = len(sorted_ar)
+    mid = n // 2
+    if n % 2 == 0:
+        return (sorted_ar[mid - 1] + sorted_ar[mid]) / 2
+    else:
+        return sorted_ar[mid]
+
+def mode(ar):
+    frequency = {}
+    for i in ar:
+        frequency[i] = frequency.get(i, 0) + 1
+    
+    max_freq = max(frequency.values())
+    modes = [key for key, value in frequency.items() if value == max_freq]
+
+    if len(modes) == len(frequency):
+        return None
+    return modes
+
+def variance(ar):
+    m = mean(ar)
+    return sum((x - m) ** 2 for x in ar) / len(ar)
+
+def std_dev(ar):
+    return math.sqrt(variance(ar))
+
+def covariance(ar1, ar2):
+    mean1 = mean(ar1)
+    mean2 = mean(ar2)
+      
+    covar = sum((ar1[i] - mean1) * (ar2[i] - mean2) for i in range(len(ar1))) / len(ar1)
+    return covar
+
+def correlation(ar1, ar2):
+    covar = covariance(ar1, ar2)
+    stddev1 = std_dev(ar1)
+    stddev2 = std_dev(ar2)
+    
+    return covar / (stddev1 * stddev2)
+
+import math
+
+# Sample data
+data = [1, 2, 3, 4, 5, 6, 7, 8, 8, 9, 9, 10, 10]
+
+print(f"Data: {data}")
+print(f"Mean: {mean(data)}") 
+print(f"Median: {median(data)}")    
+print(f"Mode: {mode(data)}") 
+print(f"Variance: {variance(data)}")
+print(f"Standard Deviation: {std_dev(data)}")
+print(f"Covariance: {covariance(data, data)}")
+print(f"Correlation: {correlation(data, data)}")
+</pre>
+
+    <h2>Observations</h2>
+    <table>
+        <tr>
+            <th>Statistical Measure</th>
+            <th>Formula</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>Mean</td>
+            <td>Sum(x) / n</td>
+            <td>Central tendency - average value</td>
+        </tr>
+        <tr>
+            <td>Median</td>
+            <td>Middle value</td>
+            <td>Central tendency - robust to outliers</td>
+        </tr>
+        <tr>
+            <td>Mode</td>
+            <td>Most frequent value</td>
+            <td>Most common occurrence</td>
+        </tr>
+        <tr>
+            <td>Variance</td>
+            <td>Sum(x-mean)^2 / n</td>
+            <td>Spread of data</td>
+        </tr>
+        <tr>
+            <td>Standard Deviation</td>
+            <td>sqrt(Variance)</td>
+            <td>Dispersion in original units</td>
+        </tr>
+        <tr>
+            <td>Covariance</td>
+            <td>Sum(xi-mean_x)(yi-mean_y) / n</td>
+            <td>Direction of relationship</td>
+        </tr>
+        <tr>
+            <td>Correlation</td>
+            <td>Cov(X,Y) / (std_x x std_y)</td>
+            <td>Strength of relationship (-1 to +1)</td>
+        </tr>
+    </table>
+
+    <h2>Output Screenshot</h2>
+    <div class="screenshot-placeholder">
+        [Attach Output Screenshot Here]
+    </div>
+
+    <h2>Conclusion</h2>
+    <p>In this practical, we successfully implemented various statistical measures using Python without relying on
+        external libraries. We learned:</p>
+    <ul>
+        <li>Mean, Median, and Mode help understand the central tendency of data</li>
+        <li>Variance and Standard Deviation quantify how spread out the data is</li>
+        <li>Covariance and Correlation help understand relationships between two variables</li>
+        <li>These statistical measures form the foundation for data analysis and visualization</li>
+    </ul>
+    <p>The program correctly calculates all statistical measures and can be applied to any numerical dataset for
+        analysis.</p>
+
+</body>
+
+</html>

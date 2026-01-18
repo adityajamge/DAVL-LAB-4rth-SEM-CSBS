@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Practical 8 - Titanic Dataset Analysis</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            margin: 1in;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 20px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ddd;
+            font-family: 'Courier New', monospace;
+            font-size: 9pt;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .header-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .screenshot-placeholder {
+            border: 2px dashed #999;
+            padding: 50px;
+            text-align: center;
+            color: #666;
+            margin: 20px 0;
+        }
+
+        p,
+        li {
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header-info">
+        <p><strong>Name:</strong> Aditya Babanrao Jamge</p>
+        <p><strong>PRN Number:</strong> RBTL25CB076</p>
+    </div>
+
+    <h1>PRACTICAL NO. 8</h1>
+
+    <h2>Title</h2>
+    <p>Comprehensive Data Analysis and Visualization of Titanic Dataset using Python</p>
+
+    <h2>Aim</h2>
+    <p>To download the Titanic dataset into a Pandas DataFrame and perform comprehensive analysis:</p>
+    <ul>
+        <li>Identify all features, classify them by data type (numerical, categorical), and map each feature to suitable
+            chart types</li>
+        <li>Create histograms and box plots for all numerical features to analyze distributions and detect outliers</li>
+        <li>Use Seaborn to visualize data distributions and relationships by generating box plots, violin plots, pair
+            plots, and heatmaps</li>
+        <li>Perform correlation analysis and visualize outliers and missing values</li>
+        <li>Compare feature distributions, identify anomalies, and critique good and bad data visualizations</li>
+        <li>Create a chart-type recommendation table for different data types</li>
+    </ul>
+
+    <h2>Requirements</h2>
+    <table>
+        <tr>
+            <th>Software/Hardware</th>
+            <th>Specification</th>
+        </tr>
+        <tr>
+            <td>Operating System</td>
+            <td>Windows 10/11</td>
+        </tr>
+        <tr>
+            <td>Programming Language</td>
+            <td>Python 3.x</td>
+        </tr>
+        <tr>
+            <td>IDE</td>
+            <td>VS Code / PyCharm / Jupyter Notebook</td>
+        </tr>
+        <tr>
+            <td>Libraries</td>
+            <td>pandas, numpy, matplotlib, seaborn</td>
+        </tr>
+        <tr>
+            <td>Dataset</td>
+            <td>Titanic Dataset (from Seaborn)</td>
+        </tr>
+    </table>
+
+    <h2>Theory</h2>
+
+    <h3>1. Titanic Dataset Overview</h3>
+    <p>The Titanic dataset contains information about passengers aboard the RMS Titanic, including survival status,
+        passenger class, age, gender, fare, and other attributes. It is commonly used for classification and data
+        analysis tasks.</p>
+
+    <h3>2. Types of Data</h3>
+    <table>
+        <tr>
+            <th>Data Type</th>
+            <th>Description</th>
+            <th>Examples from Titanic</th>
+        </tr>
+        <tr>
+            <td>Numerical (Continuous)</td>
+            <td>Values that can take any number</td>
+            <td>age, fare</td>
+        </tr>
+        <tr>
+            <td>Numerical (Discrete)</td>
+            <td>Countable whole numbers</td>
+            <td>sibsp, parch, pclass</td>
+        </tr>
+        <tr>
+            <td>Categorical (Nominal)</td>
+            <td>Categories without order</td>
+            <td>sex, embarked</td>
+        </tr>
+        <tr>
+            <td>Categorical (Ordinal)</td>
+            <td>Categories with order</td>
+            <td>pclass (1st, 2nd, 3rd)</td>
+        </tr>
+    </table>
+
+    <h3>3. Visualization Types</h3>
+    <ul>
+        <li><strong>Histogram:</strong> Shows distribution of a single numerical variable</li>
+        <li><strong>Box Plot:</strong> Shows median, quartiles, and outliers</li>
+        <li><strong>Violin Plot:</strong> Combines box plot with kernel density estimation</li>
+        <li><strong>Pair Plot:</strong> Shows relationships between all pairs of variables</li>
+        <li><strong>Heatmap:</strong> Shows correlation matrix with color coding</li>
+    </ul>
+
+    <h3>4. Outlier Detection</h3>
+    <p>Outliers are detected using the IQR (Interquartile Range) method:</p>
+    <ul>
+        <li>IQR = Q3 - Q1</li>
+        <li>Lower Bound = Q1 - 1.5 x IQR</li>
+        <li>Upper Bound = Q3 + 1.5 x IQR</li>
+        <li>Values outside these bounds are considered outliers</li>
+    </ul>
+
+    <h2>Code</h2>
+    <pre>
+# Name: Aditya Babanrao Jamge
+# PRN Number: RBTL25CB076
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+
+print("Name: Aditya Babanrao Jamge")
+print("PRN Number: RBTL25CB076")
+
+# Load the Titanic dataset
+titanic = sns.load_dataset('titanic')
+print(f"Shape: {titanic.shape}")
+print(titanic.head())
+
+# 1. IDENTIFY FEATURES AND CLASSIFY BY DATA TYPE
+numerical_features = titanic.select_dtypes(include=[np.number]).columns.tolist()
+categorical_features = titanic.select_dtypes(include=['object', 'category', 'bool']).columns.tolist()
+
+print("\nNumerical Features:", numerical_features)
+print("Categorical Features:", categorical_features)
+
+# 2. HISTOGRAMS AND BOX PLOTS
+fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+fig.suptitle('Histograms of Numerical Features')
+for idx, col in enumerate(numerical_features[:6]):
+    ax = axes[idx // 3, idx % 3]
+    titanic[col].hist(ax=ax, bins=20, edgecolor='black')
+    ax.set_title(col)
+plt.tight_layout()
+plt.show()
+
+# Box plots
+fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+for idx, col in enumerate(numerical_features[:6]):
+    ax = axes[idx // 3, idx % 3]
+    titanic.boxplot(column=col, ax=ax)
+    ax.set_title(col)
+plt.tight_layout()
+plt.show()
+
+# Outlier detection
+for col in numerical_features:
+    Q1 = titanic[col].quantile(0.25)
+    Q3 = titanic[col].quantile(0.75)
+    IQR = Q3 - Q1
+    outliers = titanic[(titanic[col] &lt; Q1 - 1.5*IQR) | (titanic[col] &gt; Q3 + 1.5*IQR)]
+    print(f"{col}: {len(outliers)} outliers")
+
+# 3. SEABORN VISUALIZATIONS
+# Box plots by category
+sns.boxplot(data=titanic, y='age', x='survived')
+plt.title('Age by Survival')
+plt.show()
+
+# Violin plots
+sns.violinplot(data=titanic, y='age', x='survived')
+plt.title('Age Distribution by Survival')
+plt.show()
+
+# Pair plot
+sns.pairplot(titanic[['survived', 'pclass', 'age', 'fare']].dropna(), hue='survived')
+plt.show()
+
+# Correlation heatmap
+plt.figure(figsize=(10, 8))
+correlation_matrix = titanic[numerical_features].corr()
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', center=0)
+plt.title('Correlation Heatmap')
+plt.show()
+
+# Missing values visualization
+plt.figure(figsize=(12, 6))
+sns.heatmap(titanic.isnull(), cbar=True, yticklabels=False, cmap='viridis')
+plt.title('Missing Values Heatmap')
+plt.show()
+
+# 4. DISTRIBUTION COMPARISON
+sns.histplot(data=titanic, x='age', hue='survived', kde=True)
+plt.title('Age Distribution by Survival')
+plt.show()
+
+# 5. CHART TYPE RECOMMENDATION TABLE
+recommendations = pd.DataFrame({
+    'Data Type': ['Numerical', 'Numerical', 'Categorical', 'Cat + Numerical'],
+    'Purpose': ['Distribution', 'Correlation', 'Frequency', 'Comparison'],
+    'Charts': ['Histogram, Box Plot', 'Heatmap, Scatter', 'Bar, Pie', 'Violin, Box']
+})
+print(recommendations)
+</pre>
+
+    <h2>Observations</h2>
+
+    <h3>Feature Classification</h3>
+    <table>
+        <tr>
+            <th>Feature</th>
+            <th>Data Type</th>
+            <th>Recommended Charts</th>
+        </tr>
+        <tr>
+            <td>survived</td>
+            <td>Numerical (Binary)</td>
+            <td>Bar Chart, Pie Chart</td>
+        </tr>
+        <tr>
+            <td>pclass</td>
+            <td>Numerical (Ordinal)</td>
+            <td>Bar Chart, Count Plot</td>
+        </tr>
+        <tr>
+            <td>age</td>
+            <td>Numerical (Continuous)</td>
+            <td>Histogram, Box Plot, Violin Plot</td>
+        </tr>
+        <tr>
+            <td>fare</td>
+            <td>Numerical (Continuous)</td>
+            <td>Histogram, Box Plot</td>
+        </tr>
+        <tr>
+            <td>sex</td>
+            <td>Categorical (Nominal)</td>
+            <td>Bar Chart, Count Plot</td>
+        </tr>
+        <tr>
+            <td>embarked</td>
+            <td>Categorical (Nominal)</td>
+            <td>Bar Chart, Pie Chart</td>
+        </tr>
+    </table>
+
+    <h3>Chart Type Recommendation Table</h3>
+    <table>
+        <tr>
+            <th>Data Type</th>
+            <th>Purpose</th>
+            <th>Recommended Charts</th>
+        </tr>
+        <tr>
+            <td>Numerical (Single)</td>
+            <td>Distribution</td>
+            <td>Histogram, Box Plot, Violin Plot</td>
+        </tr>
+        <tr>
+            <td>Numerical (Single)</td>
+            <td>Outliers</td>
+            <td>Box Plot, Strip Plot</td>
+        </tr>
+        <tr>
+            <td>Numerical (Two)</td>
+            <td>Relationship</td>
+            <td>Scatter Plot, Line Plot</td>
+        </tr>
+        <tr>
+            <td>Numerical (Multiple)</td>
+            <td>Correlation</td>
+            <td>Heatmap, Pair Plot</td>
+        </tr>
+        <tr>
+            <td>Categorical</td>
+            <td>Frequency</td>
+            <td>Bar Chart, Pie Chart</td>
+        </tr>
+        <tr>
+            <td>Cat + Numerical</td>
+            <td>Comparison</td>
+            <td>Box Plot, Violin Plot</td>
+        </tr>
+    </table>
+
+    <h3>Good vs Bad Visualizations</h3>
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Visualization</th>
+            <th>Justification</th>
+        </tr>
+        <tr>
+            <td>GOOD</td>
+            <td>Correlation Heatmap</td>
+            <td>Shows all relationships at once with clear color coding</td>
+        </tr>
+        <tr>
+            <td>GOOD</td>
+            <td>Box Plot by Category</td>
+            <td>Clearly shows distribution, median, and outliers</td>
+        </tr>
+        <tr>
+            <td>GOOD</td>
+            <td>Pair Plot with Hue</td>
+            <td>Multiple relationships with category distinction</td>
+        </tr>
+        <tr>
+            <td>BAD</td>
+            <td>Pie Chart for Many Categories</td>
+            <td>Hard to compare slice sizes</td>
+        </tr>
+        <tr>
+            <td>BAD</td>
+            <td>3D Charts for 2D Data</td>
+            <td>Adds complexity, distorts perception</td>
+        </tr>
+        <tr>
+            <td>BAD</td>
+            <td>Truncated Y-Axis</td>
+            <td>Misleads viewer, exaggerates differences</td>
+        </tr>
+    </table>
+
+    <h2>Output Screenshots</h2>
+    <div class="screenshot-placeholder">
+        [Attach Histogram Screenshot Here]
+    </div>
+    <div class="screenshot-placeholder">
+        [Attach Box Plot Screenshot Here]
+    </div>
+    <div class="screenshot-placeholder">
+        [Attach Correlation Heatmap Screenshot Here]
+    </div>
+    <div class="screenshot-placeholder">
+        [Attach Pair Plot Screenshot Here]
+    </div>
+
+    <h2>Conclusion</h2>
+    <p>In this practical, we successfully performed comprehensive analysis of the Titanic dataset:</p>
+    <ul>
+        <li>Identified and classified features as numerical and categorical types</li>
+        <li>Created histograms and box plots to understand distributions and detect outliers</li>
+        <li>Used Seaborn for advanced visualizations including violin plots, pair plots, and heatmaps</li>
+        <li>Performed correlation analysis to identify relationships between variables</li>
+        <li>Visualized missing values and outliers in the dataset</li>
+        <li>Compared feature distributions across different categories (survived/not survived)</li>
+        <li>Created a comprehensive chart type recommendation table for different data scenarios</li>
+        <li>Analyzed good and bad visualization practices with justifications</li>
+    </ul>
+    <p>The analysis revealed important insights such as the relationship between passenger class, fare, and survival
+        rates.</p>
+
+</body>
+
+</html>

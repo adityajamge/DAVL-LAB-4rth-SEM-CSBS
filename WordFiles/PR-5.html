@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Practical 5 - Sports Event Management</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            margin: 1in;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 20px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ddd;
+            font-family: 'Courier New', monospace;
+            font-size: 9pt;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .header-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .screenshot-placeholder {
+            border: 2px dashed #999;
+            padding: 50px;
+            text-align: center;
+            color: #666;
+            margin: 20px 0;
+        }
+
+        p,
+        li {
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header-info">
+        <p><strong>Name:</strong> Aditya Babanrao Jamge</p>
+        <p><strong>PRN Number:</strong> RBTL25CB076</p>
+    </div>
+
+    <h1>PRACTICAL NO. 5</h1>
+
+    <h2>Title</h2>
+    <p>Sports Event Management System using Dictionaries and Sets in Python</p>
+
+    <h2>Aim</h2>
+    <p>To develop a Python program as a sports coordinator that:</p>
+    <ul>
+        <li>Stores student scores in dictionaries and performs update, delete, or filter operations</li>
+        <li>Uses sets to track participation in different events and perform union/intersection/difference operations
+        </li>
+        <li>Aggregates data to calculate average score per student, highest and lowest scores per event, and total
+            participants per event</li>
+        <li>Combines multiple dictionaries/lists to identify top-performing students across all events</li>
+    </ul>
+
+    <h2>Requirements</h2>
+    <table>
+        <tr>
+            <th>Software/Hardware</th>
+            <th>Specification</th>
+        </tr>
+        <tr>
+            <td>Operating System</td>
+            <td>Windows 10/11</td>
+        </tr>
+        <tr>
+            <td>Programming Language</td>
+            <td>Python 3.x</td>
+        </tr>
+        <tr>
+            <td>IDE</td>
+            <td>VS Code / PyCharm / IDLE</td>
+        </tr>
+        <tr>
+            <td>Libraries</td>
+            <td>None (Built-in only)</td>
+        </tr>
+    </table>
+
+    <h2>Theory</h2>
+
+    <h3>1. Dictionaries in Python</h3>
+    <p>Dictionaries are unordered collections of key-value pairs. They are mutable and provide fast lookups.</p>
+    <ul>
+        <li><strong>Creation:</strong> dict = {key: value}</li>
+        <li><strong>Access:</strong> dict[key] or dict.get(key)</li>
+        <li><strong>Update:</strong> dict[key] = new_value</li>
+        <li><strong>Delete:</strong> del dict[key] or dict.pop(key)</li>
+    </ul>
+
+    <h3>2. Sets in Python</h3>
+    <p>Sets are unordered collections of unique elements. They support mathematical operations.</p>
+    <ul>
+        <li><strong>Creation:</strong> set = {item1, item2} or set()</li>
+        <li><strong>Union (|):</strong> Combines all elements from both sets</li>
+        <li><strong>Intersection (&amp;):</strong> Elements common to both sets</li>
+        <li><strong>Difference (-):</strong> Elements in first set but not in second</li>
+        <li><strong>Symmetric Difference (^):</strong> Elements in either set but not both</li>
+    </ul>
+
+    <h3>3. Set Operations Visualization</h3>
+    <table>
+        <tr>
+            <th>Operation</th>
+            <th>Symbol</th>
+            <th>Description</th>
+            <th>Example (A={1,2,3}, B={2,3,4})</th>
+        </tr>
+        <tr>
+            <td>Union</td>
+            <td>A | B</td>
+            <td>All elements from both</td>
+            <td>{1, 2, 3, 4}</td>
+        </tr>
+        <tr>
+            <td>Intersection</td>
+            <td>A &amp; B</td>
+            <td>Common elements</td>
+            <td>{2, 3}</td>
+        </tr>
+        <tr>
+            <td>Difference</td>
+            <td>A - B</td>
+            <td>Elements in A not in B</td>
+            <td>{1}</td>
+        </tr>
+        <tr>
+            <td>Symmetric Diff</td>
+            <td>A ^ B</td>
+            <td>Elements in either, not both</td>
+            <td>{1, 4}</td>
+        </tr>
+    </table>
+
+    <h2>Code</h2>
+    <pre>
+# Name: Aditya Babanrao Jamge
+# PRN Number: RBTL25CB076
+
+print("Name: Aditya Babanrao Jamge")
+print("PRN Number: RBTL25CB076")
+print()
+
+# SPORTS COORDINATOR - STUDENT EVENT MANAGEMENT SYSTEM
+
+# 1. STORE STUDENT SCORES IN DICTIONARIES
+data = {}
+
+numberOfStudents = int(input("Enter the number of students: "))
+
+for i in range(numberOfStudents):
+    name = input(f"Enter the name of student {i+1}: ")
+    data[name] = {}
+
+    numberOfEvents = int(input(f"Enter the number of events for {name}: "))
+    for j in range(numberOfEvents):
+        event = input(f"Enter event {j+1} name: ")
+        score = int(input(f"Enter {name}'s score in {event}: "))
+        data[name][event] = score
+
+# 2. UPDATE, DELETE, OR FILTER DATA
+
+def update_score(data, student_name, event_name, new_score):
+    """Update a student's score for a specific event"""
+    if student_name in data:
+        if event_name in data[student_name]:
+            old_score = data[student_name][event_name]
+            data[student_name][event_name] = new_score
+            print(f"Updated {student_name}'s score: {old_score} -&gt; {new_score}")
+        else:
+            data[student_name][event_name] = new_score
+            print(f"Added new event {event_name} for {student_name}")
+
+def delete_student(data, student_name):
+    if student_name in data:
+        del data[student_name]
+        print(f"Deleted student: {student_name}")
+
+def filter_students_by_min_score(data, min_score):
+    return {student: events for student, events in data.items() 
+            if any(score &gt;= min_score for score in events.values())}
+
+# 3. USE SETS TO TRACK PARTICIPATION IN EVENTS
+
+studentNames = {student for student in data.keys()}
+allEvents = {event for student, events in data.items() for event in events.keys()}
+
+eventParticipants = {}
+for event in allEvents:
+    eventParticipants[event] = set()
+    for student, events in data.items():
+        if event in events:
+            eventParticipants[event].add(student)
+
+# SET OPERATIONS
+events_list = list(allEvents)
+for i in range(len(events_list)):
+    for j in range(i + 1, len(events_list)):
+        event1, event2 = events_list[i], events_list[j]
+        participants1 = eventParticipants[event1]
+        participants2 = eventParticipants[event2]
+        
+        print(f"\n{event1} vs {event2}:")
+        print(f"  Union: {participants1 | participants2}")
+        print(f"  Intersection: {participants1 &amp; participants2}")
+        print(f"  Difference ({event1} only): {participants1 - participants2}")
+
+# 4. AGGREGATE DATA CALCULATIONS
+
+# Average Score Per Student
+studentAverages = {}
+for student, events in data.items():
+    if events:
+        studentAverages[student] = round(sum(events.values()) / len(events), 2)
+
+# Highest and Lowest Scores Per Event
+for event in allEvents:
+    scores = [(student, data[student][event]) for student in data 
+              if event in data[student]]
+    if scores:
+        highest = max(scores, key=lambda x: x[1])
+        lowest = min(scores, key=lambda x: x[1])
+        print(f"{event}: Highest={highest}, Lowest={lowest}")
+
+# 5. IDENTIFY TOP-PERFORMING STUDENTS
+
+studentTotalScores = {}
+for student, events in data.items():
+    studentTotalScores[student] = sum(events.values())
+
+sortedByTotal = sorted(studentTotalScores.items(), key=lambda x: x[1], reverse=True)
+for rank, (student, total) in enumerate(sortedByTotal, 1):
+    print(f"Rank {rank}: {student} with total score {total}")
+</pre>
+
+    <h2>Observations</h2>
+
+    <h3>Comparison: Dictionaries vs Sets</h3>
+    <table>
+        <tr>
+            <th>Feature</th>
+            <th>Dictionary</th>
+            <th>Set</th>
+        </tr>
+        <tr>
+            <td>Structure</td>
+            <td>Key-Value pairs</td>
+            <td>Unique values only</td>
+        </tr>
+        <tr>
+            <td>Duplicates</td>
+            <td>Keys must be unique</td>
+            <td>No duplicates allowed</td>
+        </tr>
+        <tr>
+            <td>Ordering</td>
+            <td>Ordered (Python 3.7+)</td>
+            <td>Unordered</td>
+        </tr>
+        <tr>
+            <td>Use Case</td>
+            <td>Mapping data</td>
+            <td>Membership testing</td>
+        </tr>
+        <tr>
+            <td>Mathematical Ops</td>
+            <td>Not supported</td>
+            <td>Union, Intersection, etc.</td>
+        </tr>
+    </table>
+
+    <h3>Set Operations Results</h3>
+    <table>
+        <tr>
+            <th>Operation</th>
+            <th>Purpose in Sports Context</th>
+        </tr>
+        <tr>
+            <td>Union</td>
+            <td>All students who participated in either event</td>
+        </tr>
+        <tr>
+            <td>Intersection</td>
+            <td>Students who participated in both events</td>
+        </tr>
+        <tr>
+            <td>Difference</td>
+            <td>Students who participated in one event but not the other</td>
+        </tr>
+    </table>
+
+    <h2>Output Screenshot</h2>
+    <div class="screenshot-placeholder">
+        [Attach Output Screenshot Here]
+    </div>
+
+    <h2>Conclusion</h2>
+    <p>In this practical, we successfully implemented a Sports Event Management System that demonstrates:</p>
+    <ul>
+        <li>Effective use of nested dictionaries for storing hierarchical data (students to events to scores)</li>
+        <li>CRUD operations (Create, Read, Update, Delete) on dictionary data</li>
+        <li>Set operations (union, intersection, difference) for analyzing event participation</li>
+        <li>Data aggregation techniques for calculating averages, finding extremes, and ranking</li>
+        <li>Combination of dictionaries and sets to derive meaningful insights from sports data</li>
+    </ul>
+    <p>The program provides a complete solution for sports coordinators to manage and analyze student participation and
+        performance across multiple events.</p>
+
+</body>
+
+</html>

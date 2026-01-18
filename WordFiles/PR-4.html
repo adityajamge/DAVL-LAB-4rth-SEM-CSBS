@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Practical 4 - Student Marks Analysis</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            margin: 1in;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 20px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ddd;
+            font-family: 'Courier New', monospace;
+            font-size: 9pt;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .header-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .screenshot-placeholder {
+            border: 2px dashed #999;
+            padding: 50px;
+            text-align: center;
+            color: #666;
+            margin: 20px 0;
+        }
+
+        p,
+        li {
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header-info">
+        <p><strong>Name:</strong> Aditya Babanrao Jamge</p>
+        <p><strong>PRN Number:</strong> RBTL25CB076</p>
+    </div>
+
+    <h1>PRACTICAL NO. 4</h1>
+
+    <h2>Title</h2>
+    <p>School Student Marks Analysis System using Python</p>
+
+    <h2>Aim</h2>
+    <p>To develop a Python program that:</p>
+    <ul>
+        <li>Stores student names and marks using variables, lists, and tuples</li>
+        <li>Calculates total, average, and percentage for each student</li>
+        <li>Determines pass/fail status and assigns grades (A: greater than or equal to 80, B: 60-79, C: 40-59, F: less
+            than 40)</li>
+        <li>Identifies students with highest and lowest marks and prints all even marks</li>
+        <li>Performs result analysis including mean, median, mode, and standard deviation for every course</li>
+    </ul>
+
+    <h2>Requirements</h2>
+    <table>
+        <tr>
+            <th>Software/Hardware</th>
+            <th>Specification</th>
+        </tr>
+        <tr>
+            <td>Operating System</td>
+            <td>Windows 10/11</td>
+        </tr>
+        <tr>
+            <td>Programming Language</td>
+            <td>Python 3.x</td>
+        </tr>
+        <tr>
+            <td>IDE</td>
+            <td>VS Code / PyCharm / IDLE</td>
+        </tr>
+        <tr>
+            <td>Libraries</td>
+            <td>math (built-in)</td>
+        </tr>
+    </table>
+
+    <h2>Theory</h2>
+
+    <h3>1. Python Data Structures</h3>
+    <p><strong>Variables:</strong> Used to store individual values like subject names.</p>
+    <p><strong>Lists:</strong> Ordered, mutable collections used to store student names and marks.</p>
+    <p><strong>Tuples:</strong> Ordered, immutable collections used to store fixed data like subjects and individual
+        student records.</p>
+
+    <h3>2. Grading System</h3>
+    <table>
+        <tr>
+            <th>Grade</th>
+            <th>Percentage Range</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td>A</td>
+            <td>80% and above</td>
+            <td>Pass (Excellent)</td>
+        </tr>
+        <tr>
+            <td>B</td>
+            <td>60% - 79%</td>
+            <td>Pass (Good)</td>
+        </tr>
+        <tr>
+            <td>C</td>
+            <td>40% - 59%</td>
+            <td>Pass (Average)</td>
+        </tr>
+        <tr>
+            <td>F</td>
+            <td>Below 40%</td>
+            <td>Fail</td>
+        </tr>
+    </table>
+
+    <h3>3. Statistical Measures for Result Analysis</h3>
+    <ul>
+        <li><strong>Mean:</strong> Average of all marks in a subject</li>
+        <li><strong>Median:</strong> Middle value when marks are sorted</li>
+        <li><strong>Mode:</strong> Most frequently occurring mark</li>
+        <li><strong>Standard Deviation:</strong> Measure of spread around the mean</li>
+    </ul>
+
+    <h2>Code</h2>
+    <pre>
+# Name: Aditya Babanrao Jamge
+# PRN Number: RBTL25CB076
+
+import math
+
+print("Name: Aditya Babanrao Jamge")
+print("PRN Number: RBTL25CB076")
+print()
+
+# SCHOOL STUDENT MARKS ANALYSIS SYSTEM
+
+# 1. STORE STUDENT NAMES AND MARKS USING VARIABLES, LISTS, AND TUPLES
+
+# Using variables for subjects
+subject1 = "Mathematics"
+subject2 = "Science"
+subject3 = "English"
+subject4 = "History"
+subject5 = "Computer"
+
+# Using tuple for subjects (immutable)
+subjects = (subject1, subject2, subject3, subject4, subject5)
+
+# Using list for student names
+students = []
+
+# Using list of tuples for storing marks
+student_marks = []
+
+# Input student data
+print("=" * 60)
+print("        STUDENT MARKS ENTRY SYSTEM")
+print("=" * 60)
+
+num_students = int(input("Enter the number of students: "))
+
+for i in range(num_students):
+    print(f"\n--- Student {i + 1} ---")
+    name = input("Enter student name: ").strip()
+    students.append(name)
+    
+    marks = []
+    for subject in subjects:
+        while True:
+            try:
+                mark = float(input(f"  Enter marks in {subject} (0-100): "))
+                if 0 &lt;= mark &lt;= 100:
+                    marks.append(mark)
+                    break
+                print("  Please enter marks between 0 and 100.")
+            except ValueError:
+                print("  Invalid input.")
+    
+    student_marks.append((name, tuple(marks)))
+
+# 2. CALCULATE TOTAL, AVERAGE, AND PERCENTAGE
+
+student_results = []
+
+for name, marks in student_marks:
+    total = sum(marks)
+    average = total / len(marks)
+    percentage = (total / (len(marks) * 100)) * 100
+    
+    student_results.append({
+        'name': name, 'marks': marks, 'total': total,
+        'average': average, 'percentage': percentage
+    })
+
+# 3. DETERMINE PASS/FAIL STATUS AND ASSIGN GRADES
+
+def get_grade(percentage):
+    if percentage &gt;= 80: return "A"
+    elif percentage &gt;= 60: return "B"
+    elif percentage &gt;= 40: return "C"
+    else: return "F"
+
+def get_status(percentage):
+    return "PASS" if percentage &gt;= 40 else "FAIL"
+
+for result in student_results:
+    result['grade'] = get_grade(result['percentage'])
+    result['status'] = get_status(result['percentage'])
+
+# 4. IDENTIFY HIGHEST/LOWEST MARKS AND PRINT EVEN MARKS
+
+highest_student = max(student_results, key=lambda x: x['total'])
+lowest_student = min(student_results, key=lambda x: x['total'])
+
+all_marks = []
+for result in student_results:
+    all_marks.extend(result['marks'])
+
+even_marks = [int(mark) for mark in all_marks if int(mark) % 2 == 0]
+
+# 5. RESULT ANALYSIS - MEAN, MEDIAN, MODE, STANDARD DEVIATION
+
+def mean(ar): return sum(ar) / len(ar)
+
+def median(ar):
+    sorted_ar = sorted(ar)
+    n = len(sorted_ar)
+    mid = n // 2
+    if n % 2 == 0:
+        return (sorted_ar[mid - 1] + sorted_ar[mid]) / 2
+    return sorted_ar[mid]
+
+def mode(ar):
+    frequency = {}
+    for i in ar:
+        frequency[i] = frequency.get(i, 0) + 1
+    max_freq = max(frequency.values())
+    modes = [key for key, value in frequency.items() if value == max_freq]
+    if len(modes) == len(frequency):
+        return "No mode"
+    return modes
+
+def std_dev(ar):
+    m = mean(ar)
+    variance = sum((x - m) ** 2 for x in ar) / len(ar)
+    return math.sqrt(variance)
+
+# Calculate statistics for each subject
+for i, subject in enumerate(subjects):
+    subject_marks_list = [result['marks'][i] for result in student_results]
+    print(f"\n{subject}:")
+    print(f"  Mean: {mean(subject_marks_list):.2f}")
+    print(f"  Median: {median(subject_marks_list):.2f}")
+    print(f"  Mode: {mode(subject_marks_list)}")
+    print(f"  Standard Deviation: {std_dev(subject_marks_list):.2f}")
+</pre>
+
+    <h2>Observations</h2>
+
+    <h3>Comparison: Variables vs Lists vs Tuples</h3>
+    <table>
+        <tr>
+            <th>Feature</th>
+            <th>Variables</th>
+            <th>Lists</th>
+            <th>Tuples</th>
+        </tr>
+        <tr>
+            <td>Mutability</td>
+            <td>Mutable</td>
+            <td>Mutable</td>
+            <td>Immutable</td>
+        </tr>
+        <tr>
+            <td>Use Case</td>
+            <td>Single values</td>
+            <td>Dynamic collections</td>
+            <td>Fixed records</td>
+        </tr>
+        <tr>
+            <td>Syntax</td>
+            <td>x = value</td>
+            <td>[item1, item2]</td>
+            <td>(item1, item2)</td>
+        </tr>
+        <tr>
+            <td>Memory</td>
+            <td>Least</td>
+            <td>More</td>
+            <td>Less than lists</td>
+        </tr>
+    </table>
+
+    <h3>Grade Distribution</h3>
+    <table>
+        <tr>
+            <th>Grade</th>
+            <th>Criteria</th>
+            <th>Interpretation</th>
+        </tr>
+        <tr>
+            <td>A</td>
+            <td>80% and above</td>
+            <td>Excellent performance</td>
+        </tr>
+        <tr>
+            <td>B</td>
+            <td>60-79%</td>
+            <td>Good performance</td>
+        </tr>
+        <tr>
+            <td>C</td>
+            <td>40-59%</td>
+            <td>Average performance</td>
+        </tr>
+        <tr>
+            <td>F</td>
+            <td>Below 40%</td>
+            <td>Needs improvement</td>
+        </tr>
+    </table>
+
+    <h2>Output Screenshot</h2>
+    <div class="screenshot-placeholder">
+        [Attach Output Screenshot Here]
+    </div>
+
+    <h2>Conclusion</h2>
+    <p>In this practical, we successfully developed a comprehensive Student Marks Analysis System that:</p>
+    <ul>
+        <li>Effectively used variables, lists, and tuples to store and organize student data</li>
+        <li>Calculated academic metrics including total, average, and percentage</li>
+        <li>Implemented a grading system with pass/fail determination</li>
+        <li>Identified highest and lowest performing students</li>
+        <li>Performed statistical analysis (mean, median, mode, standard deviation) for each subject</li>
+        <li>Demonstrated the practical application of Python data structures in educational data management</li>
+    </ul>
+
+</body>
+
+</html>

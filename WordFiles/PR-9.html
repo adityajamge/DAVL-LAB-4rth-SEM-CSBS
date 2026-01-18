@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Practical 9 - Iris Dataset Analysis</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            margin: 1in;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 20px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ddd;
+            font-family: 'Courier New', monospace;
+            font-size: 9pt;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .header-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .screenshot-placeholder {
+            border: 2px dashed #999;
+            padding: 50px;
+            text-align: center;
+            color: #666;
+            margin: 20px 0;
+        }
+
+        p,
+        li {
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header-info">
+        <p><strong>Name:</strong> Aditya Babanrao Jamge</p>
+        <p><strong>PRN Number:</strong> RBTL25CB076</p>
+    </div>
+
+    <h1>PRACTICAL NO. 9</h1>
+
+    <h2>Title</h2>
+    <p>Comprehensive Data Analysis and Visualization of Iris Dataset using Python</p>
+
+    <h2>Aim</h2>
+    <p>To download the Iris flower dataset into a Pandas DataFrame and perform comprehensive analysis:</p>
+    <ul>
+        <li>Identify all features, classify them by data type (numerical, categorical), and map each feature to suitable
+            chart types</li>
+        <li>Create histograms and box plots for all numerical features to analyze distributions and detect outliers</li>
+        <li>Use Seaborn to visualize data distributions and relationships by generating box plots, violin plots, pair
+            plots, and heatmaps</li>
+        <li>Perform correlation analysis and visualize outliers and missing values</li>
+        <li>Compare feature distributions, identify anomalies, and critique good and bad data visualizations</li>
+        <li>Create a chart-type recommendation table for different data types</li>
+    </ul>
+
+    <h2>Requirements</h2>
+    <table>
+        <tr>
+            <th>Software/Hardware</th>
+            <th>Specification</th>
+        </tr>
+        <tr>
+            <td>Operating System</td>
+            <td>Windows 10/11</td>
+        </tr>
+        <tr>
+            <td>Programming Language</td>
+            <td>Python 3.x</td>
+        </tr>
+        <tr>
+            <td>IDE</td>
+            <td>VS Code / PyCharm / Jupyter Notebook</td>
+        </tr>
+        <tr>
+            <td>Libraries</td>
+            <td>pandas, numpy, matplotlib, seaborn</td>
+        </tr>
+        <tr>
+            <td>Dataset</td>
+            <td>Iris Dataset (from Seaborn)</td>
+        </tr>
+    </table>
+
+    <h2>Theory</h2>
+
+    <h3>1. Iris Dataset Overview</h3>
+    <p>The Iris dataset is a famous multivariate dataset introduced by Ronald Fisher in 1936. It contains 150 samples of
+        iris flowers from three species (setosa, versicolor, virginica) with four features measured for each sample.</p>
+
+    <h3>2. Features in Iris Dataset</h3>
+    <table>
+        <tr>
+            <th>Feature</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Unit</th>
+        </tr>
+        <tr>
+            <td>sepal_length</td>
+            <td>Length of the sepal</td>
+            <td>Numerical (Continuous)</td>
+            <td>centimeters</td>
+        </tr>
+        <tr>
+            <td>sepal_width</td>
+            <td>Width of the sepal</td>
+            <td>Numerical (Continuous)</td>
+            <td>centimeters</td>
+        </tr>
+        <tr>
+            <td>petal_length</td>
+            <td>Length of the petal</td>
+            <td>Numerical (Continuous)</td>
+            <td>centimeters</td>
+        </tr>
+        <tr>
+            <td>petal_width</td>
+            <td>Width of the petal</td>
+            <td>Numerical (Continuous)</td>
+            <td>centimeters</td>
+        </tr>
+        <tr>
+            <td>species</td>
+            <td>Flower species</td>
+            <td>Categorical (Nominal)</td>
+            <td>-</td>
+        </tr>
+    </table>
+
+    <h3>3. Visualization Techniques</h3>
+    <ul>
+        <li><strong>Histogram:</strong> Shows frequency distribution of continuous variables</li>
+        <li><strong>Box Plot:</strong> Displays five-number summary (min, Q1, median, Q3, max) and outliers</li>
+        <li><strong>Violin Plot:</strong> Shows probability density of data at different values</li>
+        <li><strong>Pair Plot:</strong> Grid of scatter plots for all variable pairs</li>
+        <li><strong>Heatmap:</strong> Color-coded correlation matrix</li>
+        <li><strong>Swarm Plot:</strong> Shows all data points without overlap</li>
+    </ul>
+
+    <h3>4. Correlation Analysis</h3>
+    <p>Correlation coefficient (r) measures the strength and direction of linear relationship:</p>
+    <ul>
+        <li>r = +1: Perfect positive correlation</li>
+        <li>r = -1: Perfect negative correlation</li>
+        <li>r = 0: No correlation</li>
+        <li>|r| greater than 0.7: Strong correlation</li>
+        <li>0.4 less than |r| less than 0.7: Moderate correlation</li>
+        <li>|r| less than 0.4: Weak correlation</li>
+    </ul>
+
+    <h2>Code</h2>
+    <pre>
+# Name: Aditya Babanrao Jamge
+# PRN Number: RBTL25CB076
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+
+print("Name: Aditya Babanrao Jamge")
+print("PRN Number: RBTL25CB076")
+
+# Load the Iris dataset
+iris = sns.load_dataset('iris')
+print(f"Shape: {iris.shape}")
+print(iris.head())
+print(iris.describe())
+
+# 1. IDENTIFY FEATURES AND CLASSIFY BY DATA TYPE
+numerical_features = iris.select_dtypes(include=[np.number]).columns.tolist()
+categorical_features = iris.select_dtypes(include=['object', 'category']).columns.tolist()
+
+print("\nNumerical Features:", numerical_features)
+print("Categorical Features:", categorical_features)
+
+# 2. HISTOGRAMS AND BOX PLOTS
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+fig.suptitle('Histograms of Numerical Features')
+for idx, col in enumerate(numerical_features):
+    ax = axes[idx // 2, idx % 2]
+    iris[col].hist(ax=ax, bins=20, edgecolor='black', color='steelblue')
+    ax.axvline(iris[col].mean(), color='red', linestyle='--', label='Mean')
+    ax.axvline(iris[col].median(), color='green', linestyle='--', label='Median')
+    ax.set_title(col)
+    ax.legend()
+plt.tight_layout()
+plt.show()
+
+# Box plots
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+for idx, col in enumerate(numerical_features):
+    ax = axes[idx // 2, idx % 2]
+    iris.boxplot(column=col, ax=ax)
+    ax.set_title(col)
+plt.tight_layout()
+plt.show()
+
+# Outlier detection
+for col in numerical_features:
+    Q1 = iris[col].quantile(0.25)
+    Q3 = iris[col].quantile(0.75)
+    IQR = Q3 - Q1
+    outliers = iris[(iris[col] &lt; Q1 - 1.5*IQR) | (iris[col] &gt; Q3 + 1.5*IQR)]
+    print(f"{col}: {len(outliers)} outliers")
+
+# 3. SEABORN VISUALIZATIONS
+# Box plots by species
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+for idx, col in enumerate(numerical_features):
+    ax = axes[idx // 2, idx % 2]
+    sns.boxplot(data=iris, x='species', y=col, ax=ax, palette='Set2')
+    ax.set_title(f'{col} by Species')
+plt.tight_layout()
+plt.show()
+
+# Violin plots
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+for idx, col in enumerate(numerical_features):
+    ax = axes[idx // 2, idx % 2]
+    sns.violinplot(data=iris, x='species', y=col, ax=ax, palette='Set3')
+    ax.set_title(f'{col} Distribution by Species')
+plt.tight_layout()
+plt.show()
+
+# Pair plot
+sns.pairplot(iris, hue='species', diag_kind='kde', palette='husl')
+plt.suptitle('Pair Plot - Iris Dataset', y=1.02)
+plt.show()
+
+# Correlation heatmap
+plt.figure(figsize=(10, 8))
+correlation_matrix = iris[numerical_features].corr()
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', center=0, fmt='.3f')
+plt.title('Correlation Heatmap')
+plt.show()
+
+# 4. SPECIES-WISE STATISTICS
+for species in iris['species'].unique():
+    species_data = iris[iris['species'] == species]
+    print(f"\n{species.upper()}:")
+    for col in numerical_features:
+        print(f"  {col}: Mean={species_data[col].mean():.2f}, Std={species_data[col].std():.2f}")
+
+# 5. FINAL SCATTER PLOT
+plt.figure(figsize=(10, 8))
+for species in iris['species'].unique():
+    species_data = iris[iris['species'] == species]
+    plt.scatter(species_data['petal_length'], species_data['petal_width'], 
+                label=species, alpha=0.7, s=60)
+plt.xlabel('Petal Length (cm)')
+plt.ylabel('Petal Width (cm)')
+plt.title('Iris Species Classification')
+plt.legend(title='Species')
+plt.grid(True, alpha=0.3)
+plt.show()
+</pre>
+
+    <h2>Observations</h2>
+
+    <h3>Feature Classification</h3>
+    <table>
+        <tr>
+            <th>Feature</th>
+            <th>Data Type</th>
+            <th>Recommended Charts</th>
+        </tr>
+        <tr>
+            <td>sepal_length</td>
+            <td>Numerical (Continuous)</td>
+            <td>Histogram, Box Plot, Violin Plot</td>
+        </tr>
+        <tr>
+            <td>sepal_width</td>
+            <td>Numerical (Continuous)</td>
+            <td>Histogram, Box Plot, Violin Plot</td>
+        </tr>
+        <tr>
+            <td>petal_length</td>
+            <td>Numerical (Continuous)</td>
+            <td>Histogram, Box Plot, Violin Plot</td>
+        </tr>
+        <tr>
+            <td>petal_width</td>
+            <td>Numerical (Continuous)</td>
+            <td>Histogram, Box Plot, Violin Plot</td>
+        </tr>
+        <tr>
+            <td>species</td>
+            <td>Categorical (Nominal)</td>
+            <td>Bar Chart, Count Plot</td>
+        </tr>
+    </table>
+
+    <h3>Correlation Analysis Results</h3>
+    <table>
+        <tr>
+            <th>Feature Pair</th>
+            <th>Correlation</th>
+            <th>Interpretation</th>
+        </tr>
+        <tr>
+            <td>petal_length vs petal_width</td>
+            <td>~0.96</td>
+            <td>Strong positive correlation</td>
+        </tr>
+        <tr>
+            <td>sepal_length vs petal_length</td>
+            <td>~0.87</td>
+            <td>Strong positive correlation</td>
+        </tr>
+        <tr>
+            <td>sepal_length vs petal_width</td>
+            <td>~0.82</td>
+            <td>Strong positive correlation</td>
+        </tr>
+        <tr>
+            <td>sepal_width vs petal_length</td>
+            <td>~-0.43</td>
+            <td>Moderate negative correlation</td>
+        </tr>
+    </table>
+
+    <h3>Chart Type Recommendation Table</h3>
+    <table>
+        <tr>
+            <th>Data Type</th>
+            <th>Purpose</th>
+            <th>Recommended Charts</th>
+        </tr>
+        <tr>
+            <td>Numerical (Single)</td>
+            <td>Distribution</td>
+            <td>Histogram, Box Plot, Violin Plot</td>
+        </tr>
+        <tr>
+            <td>Numerical (Single)</td>
+            <td>Outliers</td>
+            <td>Box Plot, Strip Plot</td>
+        </tr>
+        <tr>
+            <td>Numerical (Two)</td>
+            <td>Relationship</td>
+            <td>Scatter Plot, Line Plot</td>
+        </tr>
+        <tr>
+            <td>Numerical (Multiple)</td>
+            <td>Correlation</td>
+            <td>Heatmap, Pair Plot</td>
+        </tr>
+        <tr>
+            <td>Categorical</td>
+            <td>Frequency</td>
+            <td>Bar Chart, Pie Chart</td>
+        </tr>
+        <tr>
+            <td>Cat + Numerical</td>
+            <td>Comparison</td>
+            <td>Box Plot, Violin Plot, Swarm</td>
+        </tr>
+    </table>
+
+    <h3>Good vs Bad Visualizations</h3>
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Visualization</th>
+            <th>Justification</th>
+        </tr>
+        <tr>
+            <td>GOOD</td>
+            <td>Pair Plot with Species Hue</td>
+            <td>Shows all pairwise relationships with clear species separation</td>
+        </tr>
+        <tr>
+            <td>GOOD</td>
+            <td>Violin Plot by Species</td>
+            <td>Shows full distribution shape for comparison</td>
+        </tr>
+        <tr>
+            <td>GOOD</td>
+            <td>Correlation Heatmap</td>
+            <td>Compact view with color intensity showing strength</td>
+        </tr>
+        <tr>
+            <td>BAD</td>
+            <td>Too Many Colors</td>
+            <td>Causes cognitive overload, accessibility issues</td>
+        </tr>
+        <tr>
+            <td>BAD</td>
+            <td>Overlapping Histograms</td>
+            <td>Hides data, use transparency or KDE instead</td>
+        </tr>
+        <tr>
+            <td>BAD</td>
+            <td>Inconsistent Scales</td>
+            <td>Makes comparisons misleading</td>
+        </tr>
+    </table>
+
+    <h2>Output Screenshots</h2>
+    <div class="screenshot-placeholder">
+        [Attach Histogram Screenshot Here]
+    </div>
+    <div class="screenshot-placeholder">
+        [Attach Box Plot Screenshot Here]
+    </div>
+    <div class="screenshot-placeholder">
+        [Attach Violin Plot Screenshot Here]
+    </div>
+    <div class="screenshot-placeholder">
+        [Attach Pair Plot Screenshot Here]
+    </div>
+    <div class="screenshot-placeholder">
+        [Attach Correlation Heatmap Screenshot Here]
+    </div>
+    <div class="screenshot-placeholder">
+        [Attach Species Classification Scatter Plot Here]
+    </div>
+
+    <h2>Conclusion</h2>
+    <p>In this practical, we successfully performed comprehensive analysis of the Iris dataset:</p>
+    <ul>
+        <li>Identified and classified all 5 features (4 numerical, 1 categorical)</li>
+        <li>Created histograms and box plots revealing normal-like distributions for most features</li>
+        <li>Detected outliers in sepal_width using the IQR method</li>
+        <li>Used Seaborn for advanced visualizations including violin plots, pair plots, and heatmaps</li>
+        <li>Performed correlation analysis showing strong correlation between petal dimensions</li>
+        <li>Compared feature distributions across the three species</li>
+        <li>Found that petal dimensions (length, width) are the best features for species classification</li>
+        <li>Created a comprehensive chart-type recommendation table</li>
+        <li>Analyzed good and bad visualization practices with justifications</li>
+    </ul>
+    <p>The analysis demonstrates that the Iris dataset is well-suited for classification tasks, with petal measurements
+        providing the clearest separation between species.</p>
+
+</body>
+
+</html>
