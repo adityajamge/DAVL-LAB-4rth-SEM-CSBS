@@ -194,7 +194,11 @@ print()
 
 # SPORTS COORDINATOR - STUDENT EVENT MANAGEMENT SYSTEM
 
-# 1. STORE STUDENT SCORES IN DICTIONARIES
+# 1. STORE STUDENT SCORES IN DICTIONARIES (Dynamic User Input)
+print("=" * 60)
+print("        SPORTS EVENT MANAGEMENT SYSTEM")
+print("=" * 60)
+
 data = {}
 
 numberOfStudents = int(input("Enter the number of students: "))
@@ -209,6 +213,9 @@ for i in range(numberOfStudents):
         score = int(input(f"Enter {name}'s score in {event}: "))
         data[name][event] = score
 
+print("\n--- Initial Student Data ---")
+print(data)
+
 # 2. UPDATE, DELETE, OR FILTER DATA
 
 def update_score(data, student_name, event_name, new_score):
@@ -221,21 +228,59 @@ def update_score(data, student_name, event_name, new_score):
         else:
             data[student_name][event_name] = new_score
             print(f"Added new event {event_name} for {student_name}")
+    else:
+        print(f"Student {student_name} not found!")
 
 def delete_student(data, student_name):
     if student_name in data:
         del data[student_name]
         print(f"Deleted student: {student_name}")
+    else:
+        print(f"Student {student_name} not found!")
+
+def delete_event_score(data, student_name, event_name):
+    if student_name in data and event_name in data[student_name]:
+        del data[student_name][event_name]
+        print(f"Deleted {event_name} score for {student_name}")
+    else:
+        print(f"Record not found!")
 
 def filter_students_by_min_score(data, min_score):
     return {student: events for student, events in data.items() 
             if any(score &gt;= min_score for score in events.values())}
 
+# Example: Update a score
+print("\n--- Update Operation ---")
+if data:
+    first_student = list(data.keys())[0]
+    if data[first_student]:
+        first_event = list(data[first_student].keys())[0]
+        update_score(data, first_student, first_event, 95)
+
+print("\n--- Data After Update ---")
+print(data)
+
+# Example: Filter students with score &gt;= 50
+print("\n--- Filtered Students (score &gt;= 50) ---")
+high_scorers = filter_students_by_min_score(data, 50)
+print(high_scorers)
+
 # 3. USE SETS TO TRACK PARTICIPATION IN EVENTS
+print("\n" + "=" * 60)
+print("        SET OPERATIONS FOR EVENT PARTICIPATION")
+print("=" * 60)
 
+# Extract all student names as a set
 studentNames = {student for student in data.keys()}
-allEvents = {event for student, events in data.items() for event in events.keys()}
+print("\n--- All Students (Set) ---")
+print(studentNames)
 
+# Extract all event names as a set
+allEvents = {event for student, events in data.items() for event in events.keys()}
+print("\n--- All Events (Set) ---")
+print(allEvents)
+
+# Create a dictionary mapping each event to its set of participants
 eventParticipants = {}
 for event in allEvents:
     eventParticipants[event] = set()
@@ -243,7 +288,12 @@ for event in allEvents:
         if event in events:
             eventParticipants[event].add(student)
 
-# SET OPERATIONS
+print("\n--- Event Participants Mapping ---")
+for event, participants in eventParticipants.items():
+    print(f"{event}: {participants}")
+
+# SET OPERATIONS: Union, Intersection, Difference
+print("\n--- Set Operations Between Events ---")
 events_list = list(allEvents)
 for i in range(len(events_list)):
     for j in range(i + 1, len(events_list)):
@@ -255,33 +305,61 @@ for i in range(len(events_list)):
         print(f"  Union: {participants1 | participants2}")
         print(f"  Intersection: {participants1 &amp; participants2}")
         print(f"  Difference ({event1} only): {participants1 - participants2}")
+        print(f"  Difference ({event2} only): {participants2 - participants1}")
 
 # 4. AGGREGATE DATA CALCULATIONS
+print("\n" + "=" * 60)
+print("        AGGREGATE DATA ANALYSIS")
+print("=" * 60)
 
 # Average Score Per Student
+print("\n--- Average Score Per Student ---")
 studentAverages = {}
 for student, events in data.items():
     if events:
-        studentAverages[student] = round(sum(events.values()) / len(events), 2)
+        avg_score = sum(events.values()) / len(events)
+        studentAverages[student] = round(avg_score, 2)
+        print(f"{student}: {studentAverages[student]}")
 
 # Highest and Lowest Scores Per Event
+print("\n--- Highest and Lowest Scores Per Event ---")
 for event in allEvents:
     scores = [(student, data[student][event]) for student in data 
               if event in data[student]]
     if scores:
         highest = max(scores, key=lambda x: x[1])
         lowest = min(scores, key=lambda x: x[1])
-        print(f"{event}: Highest={highest}, Lowest={lowest}")
+        print(f"\n{event}:")
+        print(f"  Highest: {highest[0]} with score {highest[1]}")
+        print(f"  Lowest: {lowest[0]} with score {lowest[1]}")
+
+# Total Participants Per Event
+print("\n--- Total Participants Per Event ---")
+for event, participants in eventParticipants.items():
+    print(f"{event}: {len(participants)} participant(s)")
 
 # 5. IDENTIFY TOP-PERFORMING STUDENTS
+print("\n" + "=" * 60)
+print("        TOP-PERFORMING STUDENTS")
+print("=" * 60)
 
+# Total Score Per Student
+print("\n--- Total Score Per Student ---")
 studentTotalScores = {}
 for student, events in data.items():
-    studentTotalScores[student] = sum(events.values())
+    total = sum(events.values())
+    studentTotalScores[student] = total
+    print(f"{student}: {total}")
 
+# Ranking by Total Score
+print("\n--- Students Ranked by Total Score ---")
 sortedByTotal = sorted(studentTotalScores.items(), key=lambda x: x[1], reverse=True)
 for rank, (student, total) in enumerate(sortedByTotal, 1):
     print(f"Rank {rank}: {student} with total score {total}")
+
+print("\n" + "=" * 60)
+print("        ANALYSIS COMPLETE!")
+print("=" * 60)
 </pre>
 
     <h2>Observations</h2>
@@ -348,6 +426,7 @@ for rank, (student, total) in enumerate(sortedByTotal, 1):
     <h2>Conclusion</h2>
     <p>In this practical, we successfully implemented a Sports Event Management System that demonstrates:</p>
     <ul>
+        <li>Dynamic user input for student names, events, and scores</li>
         <li>Effective use of nested dictionaries for storing hierarchical data (students to events to scores)</li>
         <li>CRUD operations (Create, Read, Update, Delete) on dictionary data</li>
         <li>Set operations (union, intersection, difference) for analyzing event participation</li>
@@ -355,7 +434,7 @@ for rank, (student, total) in enumerate(sortedByTotal, 1):
         <li>Combination of dictionaries and sets to derive meaningful insights from sports data</li>
     </ul>
     <p>The program provides a complete solution for sports coordinators to manage and analyze student participation and
-        performance across multiple events.</p>
+        performance across multiple events with fully dynamic input.</p>
 
 </body>
 
